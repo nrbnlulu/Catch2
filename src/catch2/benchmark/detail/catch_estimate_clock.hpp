@@ -84,9 +84,11 @@ namespace Catch {
                 std::vector<double> times;
                 int nsamples = static_cast<int>(std::ceil(time_limit / r.elapsed));
                 times.reserve(static_cast<size_t>(nsamples));
-                std::generate_n(std::back_inserter(times), nsamples, [time_clock, &r] {
-                    return static_cast<double>((time_clock(r.iterations) / r.iterations).count());
-                });
+                for ( int s = 0; s < nsamples; ++s ) {
+                    times.push_back( static_cast<double>(
+                        ( time_clock( r.iterations ) / r.iterations )
+                            .count() ) );
+                }
                 return {
                     FloatDuration<Clock>(mean(times.begin(), times.end())),
                     classify_outliers(times.begin(), times.end()),
