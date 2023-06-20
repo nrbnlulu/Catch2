@@ -1,0 +1,1314 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A modern, C++-native, test framework.">
+      
+      
+        <meta name="author" content="Comunity">
+      
+      
+        <link rel="canonical" href="https://catch2.github.io/Catch2/configuration/">
+      
+      
+        <link rel="prev" href="../comparing-floating-point-numbers/">
+      
+      
+        <link rel="next" href="../contributing/">
+      
+      <link rel="icon" href="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-hand-logo.png?raw=true">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+    
+    
+      
+        <title>Configuration - Catch2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Open Sans";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#compile-time-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Catch2" class="md-header__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Catch2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Catch2" class="md-nav__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    Catch2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Readme/" class="md-nav__link">
+        Readme
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/" class="md-nav__link">
+        Assertions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        Benchmarks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ci-and-misc/" class="md-nav__link">
+        Ci and misc
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cmake-integration/" class="md-nav__link">
+        Cmake integration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command-line/" class="md-nav__link">
+        Command line
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commercial-users/" class="md-nav__link">
+        Commercial users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparing-floating-point-numbers/" class="md-nav__link">
+        Comparing floating point numbers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Configuration
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prefixing-catch-macros" class="md-nav__link">
+    Prefixing Catch macros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-colour" class="md-nav__link">
+    Terminal colour
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#console-width" class="md-nav__link">
+    Console width
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdout" class="md-nav__link">
+    stdout
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-stringifier" class="md-nav__link">
+    Fallback stringifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-reporter" class="md-nav__link">
+    Default reporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bazel-support" class="md-nav__link">
+    Bazel support
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c11-toggles" class="md-nav__link">
+    C++11 toggles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c17-toggles" class="md-nav__link">
+    C++17 toggles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-toggles" class="md-nav__link">
+    Other toggles
+  </a>
+  
+    <nav class="md-nav" aria-label="Other toggles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_fast_compile" class="md-nav__link">
+    CATCH_CONFIG_FAST_COMPILE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_disable_stringification" class="md-nav__link">
+    CATCH_CONFIG_DISABLE_STRINGIFICATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_disable" class="md-nav__link">
+    CATCH_CONFIG_DISABLE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-stringification" class="md-nav__link">
+    Enabling stringification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disabling-exceptions" class="md-nav__link">
+    Disabling exceptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-catchs-debug-break-b" class="md-nav__link">
+    Overriding Catch's debug break (-b)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deprecations/" class="md-nav__link">
+        Deprecations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-listeners/" class="md-nav__link">
+        Event listeners
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        Faq
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generators/" class="md-nav__link">
+        Generators
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        Limitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../list-of-examples/" class="md-nav__link">
+        List of examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matchers/" class="md-nav__link">
+        Matchers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrate-v2-to-v3/" class="md-nav__link">
+        Migrate v2 to v3
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opensource-users/" class="md-nav__link">
+        Opensource users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../other-macros/" class="md-nav__link">
+        Other macros
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../own-main/" class="md-nav__link">
+        Own main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes/" class="md-nav__link">
+        Release notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-process/" class="md-nav__link">
+        Release process
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporter-events/" class="md-nav__link">
+        Reporter events
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporters/" class="md-nav__link">
+        Reporters
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skipping-passing-failing/" class="md-nav__link">
+        Skipping passing failing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-cases-and-sections/" class="md-nav__link">
+        Test cases and sections
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-fixtures/" class="md-nav__link">
+        Test fixtures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tostring/" class="md-nav__link">
+        Tostring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage-tips/" class="md-nav__link">
+        Usage tips
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-catch/" class="md-nav__link">
+        Why catch
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prefixing-catch-macros" class="md-nav__link">
+    Prefixing Catch macros
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-colour" class="md-nav__link">
+    Terminal colour
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#console-width" class="md-nav__link">
+    Console width
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdout" class="md-nav__link">
+    stdout
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-stringifier" class="md-nav__link">
+    Fallback stringifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#default-reporter" class="md-nav__link">
+    Default reporter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bazel-support" class="md-nav__link">
+    Bazel support
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c11-toggles" class="md-nav__link">
+    C++11 toggles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c17-toggles" class="md-nav__link">
+    C++17 toggles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-toggles" class="md-nav__link">
+    Other toggles
+  </a>
+  
+    <nav class="md-nav" aria-label="Other toggles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_fast_compile" class="md-nav__link">
+    CATCH_CONFIG_FAST_COMPILE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_disable_stringification" class="md-nav__link">
+    CATCH_CONFIG_DISABLE_STRINGIFICATION
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catch_config_disable" class="md-nav__link">
+    CATCH_CONFIG_DISABLE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enabling-stringification" class="md-nav__link">
+    Enabling stringification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disabling-exceptions" class="md-nav__link">
+    Disabling exceptions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-catchs-debug-break-b" class="md-nav__link">
+    Overriding Catch's debug break (-b)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p><a id="top"></a></p>
+<h1 id="compile-time-configuration">Compile-time configuration<a class="headerlink" href="#compile-time-configuration" title="Permanent link">#</a></h1>
+<p><strong>Contents</strong><br>
+<a href="#prefixing-catch-macros">Prefixing Catch macros</a><br>
+<a href="#terminal-colour">Terminal colour</a><br>
+<a href="#console-width">Console width</a><br>
+<a href="#stdout">stdout</a><br>
+<a href="#fallback-stringifier">Fallback stringifier</a><br>
+<a href="#default-reporter">Default reporter</a><br>
+<a href="#bazel-support">Bazel support</a><br>
+<a href="#c11-toggles">C++11 toggles</a><br>
+<a href="#c17-toggles">C++17 toggles</a><br>
+<a href="#other-toggles">Other toggles</a><br>
+<a href="#enabling-stringification">Enabling stringification</a><br>
+<a href="#disabling-exceptions">Disabling exceptions</a><br>
+<a href="#overriding-catchs-debug-break--b">Overriding Catch's debug break (<code>-b</code>)</a><br>
+<a href="#static-analysis-support">Static analysis support</a><br></p>
+<p>Catch2 is designed to "just work" as much as possible, and most of the
+configuration options below are changed automatically during compilation,
+according to the detected environment. However, this detection can also
+be overridden by users, using macros documented below, and/or CMake options
+with the same name.</p>
+<h2 id="prefixing-catch-macros">Prefixing Catch macros<a class="headerlink" href="#prefixing-catch-macros" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_PREFIX_ALL
+</code></pre></div>
+<p>To keep test code clean and uncluttered Catch uses short macro names (e.g. <code>TEST_CASE</code> and <code>REQUIRE</code>). Occasionally these may conflict with identifiers from platform headers or the system under test. In this case the above identifier can be defined. This will cause all the Catch user macros to be prefixed with <code>CATCH_</code> (e.g. <code>CATCH_TEST_CASE</code> and <code>CATCH_REQUIRE</code>).</p>
+<h2 id="terminal-colour">Terminal colour<a class="headerlink" href="#terminal-colour" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_COLOUR_WIN32     // Force enables compiling colouring impl based on Win32 console API
+CATCH_CONFIG_NO_COLOUR_WIN32  // Force disables ...
+</code></pre></div>
+<p>Yes, Catch2 uses the british spelling of colour.</p>
+<p>Catch2 attempts to autodetect whether the Win32 console colouring API,
+<code>SetConsoleTextAttribute</code>, is available, and if it is available it compiles
+in a console colouring implementation that uses it.</p>
+<p>This option can be used to override Catch2's autodetection and force the
+compilation either ON or OFF.</p>
+<h2 id="console-width">Console width<a class="headerlink" href="#console-width" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_CONSOLE_WIDTH = x // where x is a number
+</code></pre></div>
+<p>Catch formats output intended for the console to fit within a fixed number of characters. This is especially important as indentation is used extensively and uncontrolled line wraps break this.
+By default a console width of 80 is assumed but this can be controlled by defining the above identifier to be a different value.</p>
+<h2 id="stdout">stdout<a class="headerlink" href="#stdout" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_NOSTDOUT
+</code></pre></div>
+<p>To support platforms that do not provide <code>std::cout</code>, <code>std::cerr</code> and
+<code>std::clog</code>, Catch does not use them directly, but rather calls
+<code>Catch::cout</code>, <code>Catch::cerr</code> and <code>Catch::clog</code>. You can replace their
+implementation by defining <code>CATCH_CONFIG_NOSTDOUT</code> and implementing
+them yourself, their signatures are:</p>
+<div class="highlight"><pre><span></span><code>std::ostream&amp; cout();
+std::ostream&amp; cerr();
+std::ostream&amp; clog();
+</code></pre></div>
+<p><a href="../examples/231-Cfg-OutputStreams.cpp">You can see an example of replacing these functions here.</a></p>
+<h2 id="fallback-stringifier">Fallback stringifier<a class="headerlink" href="#fallback-stringifier" title="Permanent link">#</a></h2>
+<p>By default, when Catch's stringification machinery has to stringify
+a type that does not specialize <code>StringMaker</code>, does not overload <code>operator&lt;&lt;</code>,
+is not an enumeration and is not a range, it uses <code>"{?}"</code>. This can be
+overridden by defining <code>CATCH_CONFIG_FALLBACK_STRINGIFIER</code> to name of a
+function that should perform the stringification instead.</p>
+<p>All types that do not provide <code>StringMaker</code> specialization or <code>operator&lt;&lt;</code>
+overload will be sent to this function (this includes enums and ranges).
+The provided function must return <code>std::string</code> and must accept any type,
+e.g. via overloading.</p>
+<p><em>Note that if the provided function does not handle a type and this type
+requires to be stringified, the compilation will fail.</em></p>
+<h2 id="default-reporter">Default reporter<a class="headerlink" href="#default-reporter" title="Permanent link">#</a></h2>
+<p>Catch's default reporter can be changed by defining macro
+<code>CATCH_CONFIG_DEFAULT_REPORTER</code> to string literal naming the desired
+default reporter.</p>
+<p>This means that defining <code>CATCH_CONFIG_DEFAULT_REPORTER</code> to <code>"console"</code>
+is equivalent with the out-of-the-box experience.</p>
+<h2 id="bazel-support">Bazel support<a class="headerlink" href="#bazel-support" title="Permanent link">#</a></h2>
+<p>Compiling Catch2 with <code>CATCH_CONFIG_BAZEL_SUPPORT</code> force-enables Catch2's
+support for Bazel's environment variables (normally Catch2 looks for
+<code>BAZEL_TEST=1</code> env var first).</p>
+<p>This can be useful if you are using older versions of Bazel, that do not
+yet have <code>BAZEL_TEST</code> env var support.</p>
+<blockquote>
+<p><code>CATCH_CONFIG_BAZEL_SUPPORT</code> was <a href="https://github.com/catchorg/Catch2/pull/2399">introduced</a> in Catch2 3.0.1.</p>
+<p><code>CATCH_CONFIG_BAZEL_SUPPORT</code> was <a href="https://github.com/catchorg/Catch2/pull/2459">deprecated</a> in Catch2 3.1.0.</p>
+</blockquote>
+<h2 id="c11-toggles">C++11 toggles<a class="headerlink" href="#c11-toggles" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_CPP11_TO_STRING // Use `std::to_string`
+</code></pre></div>
+<p>Because we support platforms whose standard library does not contain
+<code>std::to_string</code>, it is possible to force Catch to use a workaround
+based on <code>std::stringstream</code>. On platforms other than Android,
+the default is to use <code>std::to_string</code>. On Android, the default is to
+use the <code>stringstream</code> workaround. As always, it is possible to override
+Catch's selection, by defining either <code>CATCH_CONFIG_CPP11_TO_STRING</code> or
+<code>CATCH_CONFIG_NO_CPP11_TO_STRING</code>.</p>
+<h2 id="c17-toggles">C++17 toggles<a class="headerlink" href="#c17-toggles" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_CPP17_UNCAUGHT_EXCEPTIONS  // Override std::uncaught_exceptions (instead of std::uncaught_exception) support detection
+CATCH_CONFIG_CPP17_STRING_VIEW          // Override std::string_view support detection (Catch provides a StringMaker specialization by default)
+CATCH_CONFIG_CPP17_VARIANT              // Override std::variant support detection (checked by CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER)
+CATCH_CONFIG_CPP17_OPTIONAL             // Override std::optional support detection (checked by CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER)
+CATCH_CONFIG_CPP17_BYTE                 // Override std::byte support detection (Catch provides a StringMaker specialization by default)
+</code></pre></div>
+<blockquote>
+<p><code>CATCH_CONFIG_CPP17_STRING_VIEW</code> was <a href="https://github.com/catchorg/Catch2/issues/1376">introduced</a> in Catch2 2.4.1.</p>
+</blockquote>
+<p>Catch contains basic compiler/standard detection and attempts to use
+some C++17 features whenever appropriate. This automatic detection
+can be manually overridden in both directions, that is, a feature
+can be enabled by defining the macro in the table above, and disabled
+by using <code>_NO_</code> in the macro, e.g. <code>CATCH_CONFIG_NO_CPP17_UNCAUGHT_EXCEPTIONS</code>.</p>
+<h2 id="other-toggles">Other toggles<a class="headerlink" href="#other-toggles" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_COUNTER                    // Use __COUNTER__ to generate unique names for test cases
+CATCH_CONFIG_WINDOWS_SEH                // Enable SEH handling on Windows
+CATCH_CONFIG_FAST_COMPILE               // Sacrifices some (rather minor) features for compilation speed
+CATCH_CONFIG_POSIX_SIGNALS              // Enable handling POSIX signals
+CATCH_CONFIG_WINDOWS_CRTDBG             // Enable leak checking using Windows&#39;s CRT Debug Heap
+CATCH_CONFIG_DISABLE_STRINGIFICATION    // Disable stringifying the original expression
+CATCH_CONFIG_DISABLE                    // Disables assertions and test case registration
+CATCH_CONFIG_WCHAR                      // Enables use of wchart_t
+CATCH_CONFIG_EXPERIMENTAL_REDIRECT      // Enables the new (experimental) way of capturing stdout/stderr
+CATCH_CONFIG_USE_ASYNC                  // Force parallel statistical processing of samples during benchmarking
+CATCH_CONFIG_ANDROID_LOGWRITE           // Use android&#39;s logging system for debug output
+CATCH_CONFIG_GLOBAL_NEXTAFTER           // Use nextafter{,f,l} instead of std::nextafter
+CATCH_CONFIG_GETENV                     // System has a working `getenv`
+</code></pre></div>
+<blockquote>
+<p><a href="https://github.com/catchorg/Catch2/issues/1743"><code>CATCH_CONFIG_ANDROID_LOGWRITE</code></a> and <a href="https://github.com/catchorg/Catch2/pull/1739"><code>CATCH_CONFIG_GLOBAL_NEXTAFTER</code></a> were introduced in Catch2 2.10.0</p>
+<p><code>CATCH_CONFIG_GETENV</code> was <a href="https://github.com/catchorg/Catch2/pull/2562">introduced</a> in Catch2 3.2.0</p>
+</blockquote>
+<p>Currently Catch enables <code>CATCH_CONFIG_WINDOWS_SEH</code> only when compiled with MSVC, because some versions of MinGW do not have the necessary Win32 API support.</p>
+<p><code>CATCH_CONFIG_POSIX_SIGNALS</code> is on by default, except when Catch is compiled under <code>Cygwin</code>, where it is disabled by default (but can be force-enabled by defining <code>CATCH_CONFIG_POSIX_SIGNALS</code>).</p>
+<p><code>CATCH_CONFIG_GETENV</code> is on by default, except when Catch2 is compiled for
+platforms that lacks working <code>std::getenv</code> (currently Windows UWP and
+Playstation).</p>
+<p><code>CATCH_CONFIG_WINDOWS_CRTDBG</code> is off by default. If enabled, Windows's
+CRT is used to check for memory leaks, and displays them after the tests
+finish running. This option only works when linking against the default
+main, and must be defined for the whole library build.</p>
+<p><code>CATCH_CONFIG_WCHAR</code> is on by default, but can be disabled. Currently
+it is only used in support for DJGPP cross-compiler.</p>
+<p>With the exception of <code>CATCH_CONFIG_EXPERIMENTAL_REDIRECT</code>,
+these toggles can be disabled by using <code>_NO_</code> form of the toggle,
+e.g. <code>CATCH_CONFIG_NO_WINDOWS_SEH</code>.</p>
+<h3 id="catch_config_fast_compile"><code>CATCH_CONFIG_FAST_COMPILE</code><a class="headerlink" href="#catch_config_fast_compile" title="Permanent link">#</a></h3>
+<p>This compile-time flag speeds up compilation of assertion macros by ~20%,
+by disabling the generation of assertion-local try-catch blocks for
+non-exception family of assertion macros ({<code>REQUIRE</code>,<code>CHECK</code>}{<code>`,</code>_FALSE<code>,</code>_THAT`}).
+This disables translation of exceptions thrown under these assertions, but
+should not lead to false negatives.</p>
+<p><code>CATCH_CONFIG_FAST_COMPILE</code> has to be either defined, or not defined,
+in all translation units that are linked into single test binary.</p>
+<h3 id="catch_config_disable_stringification"><code>CATCH_CONFIG_DISABLE_STRINGIFICATION</code><a class="headerlink" href="#catch_config_disable_stringification" title="Permanent link">#</a></h3>
+<p>This toggle enables a workaround for VS 2017 bug. For details see <a href="../limitations/#visual-studio-2017----raw-string-literal-in-assert-fails-to-compile">known limitations</a>.</p>
+<h3 id="catch_config_disable"><code>CATCH_CONFIG_DISABLE</code><a class="headerlink" href="#catch_config_disable" title="Permanent link">#</a></h3>
+<p>This toggle removes most of Catch from given file. This means that <code>TEST_CASE</code>s are not registered and assertions are turned into no-ops. Useful for keeping tests within implementation files (ie for functions with internal linkage), instead of in external files.</p>
+<p>This feature is considered experimental and might change at any point.</p>
+<p><em>Inspired by Doctest's <code>DOCTEST_CONFIG_DISABLE</code></em></p>
+<h2 id="enabling-stringification">Enabling stringification<a class="headerlink" href="#enabling-stringification" title="Permanent link">#</a></h2>
+<p>By default, Catch does not stringify some types from the standard library. This is done to avoid dragging in various standard library headers by default. However, Catch does contain these and can be configured to provide them, using these macros:</p>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER     // Provide StringMaker specialization for std::pair
+CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER    // Provide StringMaker specialization for std::tuple
+CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER  // Provide StringMaker specialization for std::variant, std::monostate (on C++17)
+CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER // Provide StringMaker specialization for std::optional (on C++17)
+CATCH_CONFIG_ENABLE_ALL_STRINGMAKERS     // Defines all of the above
+</code></pre></div>
+<blockquote>
+<p><code>CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER</code> was <a href="https://github.com/catchorg/Catch2/issues/1380">introduced</a> in Catch2 2.4.1.</p>
+<p><code>CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER</code> was <a href="https://github.com/catchorg/Catch2/issues/1510">introduced</a> in Catch2 2.6.0.</p>
+</blockquote>
+<h2 id="disabling-exceptions">Disabling exceptions<a class="headerlink" href="#disabling-exceptions" title="Permanent link">#</a></h2>
+<blockquote>
+<p>Introduced in Catch2 2.4.0.</p>
+</blockquote>
+<p>By default, Catch2 uses exceptions to signal errors and to abort tests
+when an assertion from the <code>REQUIRE</code> family of assertions fails. We also
+provide an experimental support for disabling exceptions. Catch2 should
+automatically detect when it is compiled with exceptions disabled, but
+it can be forced to compile without exceptions by defining</p>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_DISABLE_EXCEPTIONS
+</code></pre></div>
+<p>Note that when using Catch2 without exceptions, there are 2 major
+limitations:</p>
+<p>1) If there is an error that would normally be signalled by an exception,
+the exception's message will instead be written to <code>Catch::cerr</code> and
+<code>std::terminate</code> will be called.
+2) If an assertion from the <code>REQUIRE</code> family of macros fails,
+<code>std::terminate</code> will be called after the active reporter returns.</p>
+<p>There is also a customization point for the exact behaviour of what
+happens instead of exception being thrown. To use it, define</p>
+<div class="highlight"><pre><span></span><code>CATCH_CONFIG_DISABLE_EXCEPTIONS_CUSTOM_HANDLER
+</code></pre></div>
+<p>and provide a definition for this function:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">namespace</span><span class="w"> </span><span class="nn">Catch</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="p">[[</span><span class="n">noreturn</span><span class="p">]]</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">throw_exception</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exception</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="p">);</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="overriding-catchs-debug-break-b">Overriding Catch's debug break (<code>-b</code>)<a class="headerlink" href="#overriding-catchs-debug-break-b" title="Permanent link">#</a></h2>
+<blockquote>
+<p><a href="https://github.com/catchorg/Catch2/pull/1846">Introduced</a> in Catch2 2.11.2.</p>
+</blockquote>
+<p>You can override Catch2's break-into-debugger code by defining the
+<code>CATCH_BREAK_INTO_DEBUGGER()</code> macro. This can be used if e.g. Catch2 does
+not know your platform, or your platform is misdetected.</p>
+<p>The macro will be used as is, that is, <code>CATCH_BREAK_INTO_DEBUGGER();</code>
+must compile and must break into debugger.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      catchorg <a href="https://github/nrbnlulu.com>Nir</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/catchorg/Catch2" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  </body>
+</html>

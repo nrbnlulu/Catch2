@@ -1,0 +1,1457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A modern, C++-native, test framework.">
+      
+      
+        <meta name="author" content="Comunity">
+      
+      
+        <link rel="canonical" href="https://catch2.github.io/Catch2/cmake-integration/">
+      
+      
+        <link rel="prev" href="../ci-and-misc/">
+      
+      
+        <link rel="next" href="../command-line/">
+      
+      <link rel="icon" href="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-hand-logo.png?raw=true">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+    
+    
+      
+        <title>Cmake integration - Catch2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Open Sans";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cmake-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Catch2" class="md-header__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Catch2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cmake integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Catch2" class="md-nav__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    Catch2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Readme/" class="md-nav__link">
+        Readme
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/" class="md-nav__link">
+        Assertions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        Benchmarks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ci-and-misc/" class="md-nav__link">
+        Ci and misc
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Cmake integration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Cmake integration
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cmake-targets" class="md-nav__link">
+    CMake targets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-test-registration" class="md-nav__link">
+    Automatic test registration
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic test registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catchcmake-and-catchaddtestscmake" class="md-nav__link">
+    Catch.cmake and CatchAddTests.cmake
+  </a>
+  
+    <nav class="md-nav" aria-label="Catch.cmake and CatchAddTests.cmake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization" class="md-nav__link">
+    Customization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parseandaddcatchtestscmake" class="md-nav__link">
+    ParseAndAddCatchTests.cmake
+  </a>
+  
+    <nav class="md-nav" aria-label="ParseAndAddCatchTests.cmake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization_1" class="md-nav__link">
+    Customization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catchshardtestscmake" class="md-nav__link">
+    CatchShardTests.cmake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmake-project-options" class="md-nav__link">
+    CMake project options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#catch_config_-customization-options-in-cmake" class="md-nav__link">
+    CATCH_CONFIG_* customization options in CMake
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-catch2-from-git-repository" class="md-nav__link">
+    Installing Catch2 from git repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-catch2-from-vcpkg" class="md-nav__link">
+    Installing Catch2 from vcpkg
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command-line/" class="md-nav__link">
+        Command line
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commercial-users/" class="md-nav__link">
+        Commercial users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparing-floating-point-numbers/" class="md-nav__link">
+        Comparing floating point numbers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deprecations/" class="md-nav__link">
+        Deprecations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-listeners/" class="md-nav__link">
+        Event listeners
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        Faq
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generators/" class="md-nav__link">
+        Generators
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        Limitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../list-of-examples/" class="md-nav__link">
+        List of examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matchers/" class="md-nav__link">
+        Matchers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrate-v2-to-v3/" class="md-nav__link">
+        Migrate v2 to v3
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opensource-users/" class="md-nav__link">
+        Opensource users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../other-macros/" class="md-nav__link">
+        Other macros
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../own-main/" class="md-nav__link">
+        Own main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes/" class="md-nav__link">
+        Release notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-process/" class="md-nav__link">
+        Release process
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporter-events/" class="md-nav__link">
+        Reporter events
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporters/" class="md-nav__link">
+        Reporters
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skipping-passing-failing/" class="md-nav__link">
+        Skipping passing failing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-cases-and-sections/" class="md-nav__link">
+        Test cases and sections
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-fixtures/" class="md-nav__link">
+        Test fixtures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tostring/" class="md-nav__link">
+        Tostring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage-tips/" class="md-nav__link">
+        Usage tips
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-catch/" class="md-nav__link">
+        Why catch
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cmake-targets" class="md-nav__link">
+    CMake targets
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatic-test-registration" class="md-nav__link">
+    Automatic test registration
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic test registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#catchcmake-and-catchaddtestscmake" class="md-nav__link">
+    Catch.cmake and CatchAddTests.cmake
+  </a>
+  
+    <nav class="md-nav" aria-label="Catch.cmake and CatchAddTests.cmake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization" class="md-nav__link">
+    Customization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parseandaddcatchtestscmake" class="md-nav__link">
+    ParseAndAddCatchTests.cmake
+  </a>
+  
+    <nav class="md-nav" aria-label="ParseAndAddCatchTests.cmake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage_1" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization_1" class="md-nav__link">
+    Customization
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catchshardtestscmake" class="md-nav__link">
+    CatchShardTests.cmake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmake-project-options" class="md-nav__link">
+    CMake project options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#catch_config_-customization-options-in-cmake" class="md-nav__link">
+    CATCH_CONFIG_* customization options in CMake
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-catch2-from-git-repository" class="md-nav__link">
+    Installing Catch2 from git repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-catch2-from-vcpkg" class="md-nav__link">
+    Installing Catch2 from vcpkg
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p><a id="top"></a></p>
+<h1 id="cmake-integration">CMake integration<a class="headerlink" href="#cmake-integration" title="Permanent link">#</a></h1>
+<p><strong>Contents</strong><br>
+<a href="#cmake-targets">CMake targets</a><br>
+<a href="#automatic-test-registration">Automatic test registration</a><br>
+<a href="#cmake-project-options">CMake project options</a><br>
+<a href="#catch_config_-customization-options-in-cmake"><code>CATCH_CONFIG_*</code> customization options in CMake</a><br>
+<a href="#installing-catch2-from-git-repository">Installing Catch2 from git repository</a><br>
+<a href="#installing-catch2-from-vcpkg">Installing Catch2 from vcpkg</a><br></p>
+<p>Because we use CMake to build Catch2, we also provide a couple of
+integration points for our users.</p>
+<p>1) Catch2 exports a (namespaced) CMake target
+2) Catch2's repository contains CMake scripts for automatic registration
+of <code>TEST_CASE</code>s in CTest</p>
+<h2 id="cmake-targets">CMake targets<a class="headerlink" href="#cmake-targets" title="Permanent link">#</a></h2>
+<p>Catch2's CMake build exports two targets, <code>Catch2::Catch2</code>, and
+<code>Catch2::Catch2WithMain</code>. If you do not need custom <code>main</code> function,
+you should be using the latter (and only the latter). Linking against
+it will add the proper include paths and link your target together with
+2 static libraries that implement Catch2 and its main respectively.
+If you need custom <code>main</code>, you should link only against <code>Catch2::Catch2</code>.</p>
+<p>This means that if Catch2 has been installed on the system, it should
+be enough to do
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">Catch2</span><span class="w"> </span><span class="s">3</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c"># These tests can use the Catch2-provided main</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">test.cpp</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">Catch2::Catch2WithMain</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c"># These tests need their own main</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">custom-main-tests</span><span class="w"> </span><span class="s">test.cpp</span><span class="w"> </span><span class="s">test-main.cpp</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">custom-main-tests</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">Catch2::Catch2</span><span class="p">)</span>
+</code></pre></div></p>
+<p>These targets are also provided when Catch2 is used as a subdirectory.
+Assuming Catch2 has been cloned to <code>lib/Catch2</code>, you only need to replace
+the <code>find_package</code> call with <code>add_subdirectory(lib/Catch2)</code> and the snippet
+above still works.</p>
+<p>Another possibility is to use <a href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">Include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="s">Catch2</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/catchorg/Catch2.git</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="s">GIT_TAG</span><span class="w">        </span><span class="s">v3.0.1</span><span class="w"> </span><span class="c"># or a later release</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">Catch2</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">test.cpp</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">Catch2::Catch2WithMain</span><span class="p">)</span>
+</code></pre></div></p>
+<h2 id="automatic-test-registration">Automatic test registration<a class="headerlink" href="#automatic-test-registration" title="Permanent link">#</a></h2>
+<p>Catch2's repository also contains three CMake scripts that help users
+with automatically registering their <code>TEST_CASE</code>s with CTest. They
+can be found in the <code>extras</code> folder, and are</p>
+<p>1) <code>Catch.cmake</code> (and its dependency <code>CatchAddTests.cmake</code>)
+2) <code>ParseAndAddCatchTests.cmake</code> (deprecated)
+3) <code>CatchShardTests.cmake</code> (and its dependency <code>CatchShardTestsImpl.cmake</code>)</p>
+<p>If Catch2 has been installed in system, both of these can be used after
+doing <code>find_package(Catch2 REQUIRED)</code>. Otherwise you need to add them
+to your CMake module path.</p>
+<p><a id="catch_discover_tests"></a></p>
+<h3 id="catchcmake-and-catchaddtestscmake"><code>Catch.cmake</code> and <code>CatchAddTests.cmake</code><a class="headerlink" href="#catchcmake-and-catchaddtestscmake" title="Permanent link">#</a></h3>
+<p><code>Catch.cmake</code> provides function <code>catch_discover_tests</code> to get tests from
+a target. This function works by running the resulting executable with
+<code>--list-test-names-only</code> flag, and then parsing the output to find all
+existing tests.</p>
+<h4 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.5</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">project</span><span class="p">(</span><span class="s">baz</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="w"> </span><span class="s">VERSION</span><span class="w"> </span><span class="s">0.0.1</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">Catch2</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">test.cpp</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">Catch2::Catch2</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nb">include</span><span class="p">(</span><span class="s">CTest</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">include</span><span class="p">(</span><span class="s">Catch</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nb">catch_discover_tests</span><span class="p">(</span><span class="s">tests</span><span class="p">)</span>
+</code></pre></div>
+<p>When using <code>FetchContent</code>, <code>include(Catch)</code> will fail unless
+<code>CMAKE_MODULE_PATH</code> is explicitly updated to include the extras
+directory.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># ... FetchContent ...</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c">#</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">list</span><span class="p">(</span><span class="s">APPEND</span><span class="w"> </span><span class="s">CMAKE_MODULE_PATH</span><span class="w"> </span><span class="o">${</span><span class="nv">catch2_SOURCE_DIR</span><span class="o">}</span><span class="s">/extras</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">include</span><span class="p">(</span><span class="s">CTest</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">include</span><span class="p">(</span><span class="s">Catch</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nb">catch_discover_tests</span><span class="p">(</span><span class="s">tests</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="customization">Customization<a class="headerlink" href="#customization" title="Permanent link">#</a></h4>
+<p><code>catch_discover_tests</code> can be given several extra arguments:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">catch_discover_tests</span><span class="p">(</span><span class="s">target</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">                     </span><span class="s">[TEST_SPEC</span><span class="w"> </span><span class="s">arg1...]</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">                     </span><span class="s">[EXTRA_ARGS</span><span class="w"> </span><span class="s">arg1...]</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">                     </span><span class="s">[WORKING_DIRECTORY</span><span class="w"> </span><span class="s">dir]</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">                     </span><span class="s">[TEST_PREFIX</span><span class="w"> </span><span class="s">prefix]</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">                     </span><span class="s">[TEST_SUFFIX</span><span class="w"> </span><span class="s">suffix]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">                     </span><span class="s">[PROPERTIES</span><span class="w"> </span><span class="s">name1</span><span class="w"> </span><span class="s">value1...]</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">                     </span><span class="s">[TEST_LIST</span><span class="w"> </span><span class="s">var]</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">                     </span><span class="s">[REPORTER</span><span class="w"> </span><span class="s">reporter]</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                     </span><span class="s">[OUTPUT_DIR</span><span class="w"> </span><span class="s">dir]</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">                     </span><span class="s">[OUTPUT_PREFIX</span><span class="w"> </span><span class="s">prefix]</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">                     </span><span class="s">[OUTPUT_SUFFIX</span><span class="w"> </span><span class="s">suffix]</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">                     </span><span class="s">[DISCOVERY_MODE</span><span class="w"> </span><span class="s">&lt;POST_BUILD|PRE_TEST&gt;]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li><code>TEST_SPEC arg1...</code></li>
+</ul>
+<p>Specifies test cases, wildcarded test cases, tags and tag expressions to
+pass to the Catch executable alongside the <code>--list-test-names-only</code> flag.</p>
+<ul>
+<li><code>EXTRA_ARGS arg1...</code></li>
+</ul>
+<p>Any extra arguments to pass on the command line to each test case.</p>
+<ul>
+<li><code>WORKING_DIRECTORY dir</code></li>
+</ul>
+<p>Specifies the directory in which to run the discovered test cases.  If this
+option is not provided, the current binary directory is used.</p>
+<ul>
+<li><code>TEST_PREFIX prefix</code></li>
+</ul>
+<p>Specifies a <em>prefix</em> to be added to the name of each discovered test case.
+This can be useful when the same test executable is being used in multiple
+calls to <code>catch_discover_tests()</code>, with different <code>TEST_SPEC</code> or <code>EXTRA_ARGS</code>.</p>
+<ul>
+<li><code>TEST_SUFFIX suffix</code></li>
+</ul>
+<p>Same as <code>TEST_PREFIX</code>, except it specific the <em>suffix</em> for the test names.
+Both <code>TEST_PREFIX</code> and <code>TEST_SUFFIX</code> can be specified at the same time.</p>
+<ul>
+<li><code>PROPERTIES name1 value1...</code></li>
+</ul>
+<p>Specifies additional properties to be set on all tests discovered by this
+invocation of <code>catch_discover_tests</code>.</p>
+<ul>
+<li><code>TEST_LIST var</code></li>
+</ul>
+<p>Make the list of tests available in the variable <code>var</code>, rather than the
+default <code>&lt;target&gt;_TESTS</code>.  This can be useful when the same test
+executable is being used in multiple calls to <code>catch_discover_tests()</code>.
+Note that this variable is only available in CTest.</p>
+<ul>
+<li><code>REPORTER reporter</code></li>
+</ul>
+<p>Use the specified reporter when running the test case. The reporter will
+be passed to the test runner as <code>--reporter reporter</code>.</p>
+<ul>
+<li><code>OUTPUT_DIR dir</code></li>
+</ul>
+<p>If specified, the parameter is passed along as
+<code>--out dir/&lt;test_name&gt;</code> to test executable. The actual file name is the
+same as the test name. This should be used instead of
+<code>EXTRA_ARGS --out foo</code> to avoid race conditions writing the result output
+when using parallel test execution.</p>
+<ul>
+<li><code>OUTPUT_PREFIX prefix</code></li>
+</ul>
+<p>May be used in conjunction with <code>OUTPUT_DIR</code>.
+If specified, <code>prefix</code> is added to each output file name, like so
+<code>--out dir/prefix&lt;test_name&gt;</code>.</p>
+<ul>
+<li><code>OUTPUT_SUFFIX suffix</code></li>
+</ul>
+<p>May be used in conjunction with <code>OUTPUT_DIR</code>.
+If specified, <code>suffix</code> is added to each output file name, like so
+<code>--out dir/&lt;test_name&gt;suffix</code>. This can be used to add a file extension to
+the output file name e.g. ".xml".</p>
+<ul>
+<li><code>DISCOVERY_MODE mode</code></li>
+</ul>
+<p>If specified allows control over when test discovery is performed.
+For a value of <code>POST_BUILD</code> (default) test discovery is performed at build time.
+For a a value of <code>PRE_TEST</code> test discovery is delayed until just prior to test
+execution (useful e.g. in cross-compilation environments).
+<code>DISCOVERY_MODE</code> defaults to the value of the
+<code>CMAKE_CATCH_DISCOVER_TESTS_DISCOVERY_MODE</code> variable if it is not passed when
+calling <code>catch_discover_tests</code>. This provides a mechanism for globally
+selecting a preferred test discovery behavior.</p>
+<h3 id="parseandaddcatchtestscmake"><code>ParseAndAddCatchTests.cmake</code><a class="headerlink" href="#parseandaddcatchtestscmake" title="Permanent link">#</a></h3>
+<p>⚠ This script is <a href="https://github.com/catchorg/Catch2/pull/2120">deprecated</a>
+in Catch2 2.13.4 and superseded by the above approach using <code>catch_discover_tests</code>.
+See <a href="https://github.com/catchorg/Catch2/issues/2092">#2092</a> for details.</p>
+<p><code>ParseAndAddCatchTests</code> works by parsing all implementation files
+associated with the provided target, and registering them via CTest's
+<code>add_test</code>. This approach has some limitations, such as the fact that
+commented-out tests will be registered anyway. More serious, only a
+subset of the assertion macros currently available in Catch can be
+detected by this script and tests with any macros that cannot be
+parsed are <em>silently ignored</em>.</p>
+<h4 id="usage_1">Usage<a class="headerlink" href="#usage_1" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.5</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">project</span><span class="p">(</span><span class="s">baz</span><span class="w"> </span><span class="s">LANGUAGES</span><span class="w"> </span><span class="s">CXX</span><span class="w"> </span><span class="s">VERSION</span><span class="w"> </span><span class="s">0.0.1</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">Catch2</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">test.cpp</span><span class="p">)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">tests</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">Catch2::Catch2</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">include</span><span class="p">(</span><span class="s">CTest</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">include</span><span class="p">(</span><span class="s">ParseAndAddCatchTests</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nb">ParseAndAddCatchTests</span><span class="p">(</span><span class="s">tests</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="customization_1">Customization<a class="headerlink" href="#customization_1" title="Permanent link">#</a></h4>
+<p><code>ParseAndAddCatchTests</code> provides some customization points:
+* <code>PARSE_CATCH_TESTS_VERBOSE</code> -- When <code>ON</code>, the script prints debug
+messages. Defaults to <code>OFF</code>.
+* <code>PARSE_CATCH_TESTS_NO_HIDDEN_TESTS</code> -- When <code>ON</code>, hidden tests (tests
+tagged with either of <code>[.]</code> or <code>[.foo]</code>) will not be registered.
+Defaults to <code>OFF</code>.
+* <code>PARSE_CATCH_TESTS_ADD_FIXTURE_IN_TEST_NAME</code> -- When <code>ON</code>, adds fixture
+class name to the test name in CTest. Defaults to <code>ON</code>.
+* <code>PARSE_CATCH_TESTS_ADD_TARGET_IN_TEST_NAME</code> -- When <code>ON</code>, adds target
+name to the test name in CTest. Defaults to <code>ON</code>.
+* <code>PARSE_CATCH_TESTS_ADD_TO_CONFIGURE_DEPENDS</code> -- When <code>ON</code>, adds test
+file to <code>CMAKE_CONFIGURE_DEPENDS</code>. This means that the CMake configuration
+step will be re-ran when the test files change, letting new tests be
+automatically discovered. Defaults to <code>OFF</code>.</p>
+<p>Optionally, one can specify a launching command to run tests by setting the
+variable <code>OptionalCatchTestLauncher</code> before calling <code>ParseAndAddCatchTests</code>. For
+instance to run some tests using <code>MPI</code> and other sequentially, one can write
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">OptionalCatchTestLauncher</span><span class="w"> </span><span class="o">${</span><span class="nv">MPIEXEC</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">MPIEXEC_NUMPROC_FLAG</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">NUMPROC</span><span class="o">}</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">ParseAndAddCatchTests</span><span class="p">(</span><span class="s">mpi_foo</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">unset</span><span class="p">(</span><span class="s">OptionalCatchTestLauncher</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nb">ParseAndAddCatchTests</span><span class="p">(</span><span class="s">bar</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="catchshardtestscmake"><code>CatchShardTests.cmake</code><a class="headerlink" href="#catchshardtestscmake" title="Permanent link">#</a></h3>
+<blockquote>
+<p><code>CatchShardTests.cmake</code> was introduced in Catch2 3.1.0.</p>
+</blockquote>
+<p><code>CatchShardTests.cmake</code> provides a function
+<code>catch_add_sharded_tests(TEST_BINARY)</code> that splits tests from <code>TEST_BINARY</code>
+into multiple shards. The tests in each shard and their order is randomized,
+and the seed changes every invocation of CTest.</p>
+<p>Currently there are 3 customization points for this script:</p>
+<ul>
+<li>SHARD_COUNT - number of shards to split target's tests into</li>
+<li>REPORTER    - reporter spec to use for tests</li>
+<li>TEST_SPEC   - test spec used for filtering tests</li>
+</ul>
+<p>Example usage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>include(CatchShardTests)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>catch_add_sharded_tests(foo-tests
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  SHARD_COUNT 4
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>  REPORTER &quot;xml::out=-&quot;
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  TEST_SPEC &quot;A&quot;
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>)
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>catch_add_sharded_tests(tests
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  SHARD_COUNT 8
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>  REPORTER &quot;xml::out=-&quot;
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  TEST_SPEC &quot;B&quot;
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>)
+</code></pre></div>
+<p>This registers total of 12 CTest tests (4 + 8 shards) to run shards
+from <code>foo-tests</code> test binary, filtered by a test spec.</p>
+<p><em>Note that this script is currently a proof-of-concept for reseeding
+shards per CTest run, and thus does not support (nor does it currently
+aim to support) all customization points from
+<a href="#catch_discover_tests"><code>catch_discover_tests</code></a>.</em></p>
+<h2 id="cmake-project-options">CMake project options<a class="headerlink" href="#cmake-project-options" title="Permanent link">#</a></h2>
+<p>Catch2's CMake project also provides some options for other projects
+that consume it. These are:</p>
+<ul>
+<li><code>BUILD_TESTING</code> -- When <code>ON</code> and the project is not used as a subproject,
+Catch2's test binary will be built. Defaults to <code>ON</code>.</li>
+<li><code>CATCH_INSTALL_DOCS</code> -- When <code>ON</code>, Catch2's documentation will be
+included in the installation. Defaults to <code>ON</code>.</li>
+<li><code>CATCH_INSTALL_EXTRAS</code> -- When <code>ON</code>, Catch2's extras folder (the CMake
+scripts mentioned above, debugger helpers) will be included in the
+installation. Defaults to <code>ON</code>.</li>
+<li><code>CATCH_DEVELOPMENT_BUILD</code> -- When <code>ON</code>, configures the build for development
+of Catch2. This means enabling test projects, warnings and so on.
+Defaults to <code>OFF</code>.</li>
+</ul>
+<p>Enabling <code>CATCH_DEVELOPMENT_BUILD</code> also enables further configuration
+customization options:</p>
+<ul>
+<li><code>CATCH_BUILD_TESTING</code> -- When <code>ON</code>, Catch2's SelfTest project will be
+built. Defaults to <code>ON</code>. Note that Catch2 also obeys <code>BUILD_TESTING</code> CMake
+variable, so <em>both</em> of them need to be <code>ON</code> for the SelfTest to be built,
+and either of them can be set to <code>OFF</code> to disable building SelfTest.</li>
+<li><code>CATCH_BUILD_EXAMPLES</code> -- When <code>ON</code>, Catch2's usage examples will be
+built. Defaults to <code>OFF</code>.</li>
+<li><code>CATCH_BUILD_EXTRA_TESTS</code> -- When <code>ON</code>, Catch2's extra tests will be
+built. Defaults to <code>OFF</code>.</li>
+<li><code>CATCH_BUILD_FUZZERS</code> -- When <code>ON</code>, Catch2 fuzzing entry points will
+be built. Defaults to <code>OFF</code>.</li>
+<li><code>CATCH_ENABLE_WERROR</code> -- When <code>ON</code>, adds <code>-Werror</code> or equivalent flag
+to the compilation. Defaults to <code>ON</code>.</li>
+<li><code>CATCH_BUILD_SURROGATES</code> -- When <code>ON</code>, each header in Catch2 will be
+compiled separately to ensure that they are self-sufficient.
+Defaults to <code>OFF</code>.</li>
+</ul>
+<h2 id="catch_config_-customization-options-in-cmake"><code>CATCH_CONFIG_*</code> customization options in CMake<a class="headerlink" href="#catch_config_-customization-options-in-cmake" title="Permanent link">#</a></h2>
+<blockquote>
+<p>CMake support for <code>CATCH_CONFIG_*</code> options was introduced in Catch2 3.0.1</p>
+</blockquote>
+<p>Due to the new separate compilation model, all the options from the
+<a href="../configuration/#top">Compile-time configuration docs</a> can also be set
+through Catch2's CMake. To set them, define the option you want as <code>ON</code>,
+e.g. <code>-DCATCH_CONFIG_NOSTDOUT=ON</code>.</p>
+<p>Note that setting the option to <code>OFF</code> doesn't disable it. To force disable
+an option, you need to set the <code>_NO_</code> form of it to <code>ON</code>, e.g.
+<code>-DCATCH_CONFIG_NO_COLOUR_WIN32=ON</code>.</p>
+<p>To summarize the configuration option behaviour with an example:</p>
+<table>
+<thead>
+<tr>
+<th><code>-DCATCH_CONFIG_COLOUR_WIN32</code></th>
+<th><code>-DCATCH_CONFIG_NO_COLOUR_WIN32</code></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ON</code></td>
+<td><code>ON</code></td>
+<td>error</td>
+</tr>
+<tr>
+<td><code>ON</code></td>
+<td><code>OFF</code></td>
+<td>force-on</td>
+</tr>
+<tr>
+<td><code>OFF</code></td>
+<td><code>ON</code></td>
+<td>force-off</td>
+</tr>
+<tr>
+<td><code>OFF</code></td>
+<td><code>OFF</code></td>
+<td>auto-detect</td>
+</tr>
+</tbody>
+</table>
+<h2 id="installing-catch2-from-git-repository">Installing Catch2 from git repository<a class="headerlink" href="#installing-catch2-from-git-repository" title="Permanent link">#</a></h2>
+<p>If you cannot install Catch2 from a package manager (e.g. Ubuntu 16.04
+provides catch only in version 1.2.0) you might want to install it from
+the repository instead. Assuming you have enough rights, you can just
+install it to the default location, like so:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$ git clone https://github.com/catchorg/Catch2.git
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>$ cd Catch2
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>$ cmake -Bbuild -H. -DBUILD_TESTING=OFF
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>$ sudo cmake --build build/ --target install
+</code></pre></div></p>
+<p>If you do not have superuser rights, you will also need to specify
+<a href="https://cmake.org/cmake/help/latest/variable/CMAKE_INSTALL_PREFIX.html">CMAKE_INSTALL_PREFIX</a>
+when configuring the build, and then modify your calls to
+<a href="https://cmake.org/cmake/help/latest/command/find_package.html">find_package</a>
+accordingly.</p>
+<h2 id="installing-catch2-from-vcpkg">Installing Catch2 from vcpkg<a class="headerlink" href="#installing-catch2-from-vcpkg" title="Permanent link">#</a></h2>
+<p>Alternatively, you can build and install Catch2 using <a href="https://github.com/microsoft/vcpkg/">vcpkg</a> dependency manager:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git clone https://github.com/Microsoft/vcpkg.git
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>cd vcpkg
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>./bootstrap-vcpkg.sh
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>./vcpkg integrate install
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>./vcpkg install catch2
+</code></pre></div></p>
+<p>The catch2 port in vcpkg is kept up to date by microsoft team members and community contributors.
+If the version is out of date, please <a href="https://github.com/Microsoft/vcpkg">create an issue or pull request</a> on the vcpkg repository.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      catchorg <a href="https://github/nrbnlulu.com>Nir</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/catchorg/Catch2" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  </body>
+</html>

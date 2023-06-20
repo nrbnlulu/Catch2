@@ -1,0 +1,1409 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A modern, C++-native, test framework.">
+      
+      
+        <meta name="author" content="Comunity">
+      
+      
+        <link rel="canonical" href="https://catch2.github.io/Catch2/contributing/">
+      
+      
+        <link rel="prev" href="../configuration/">
+      
+      
+        <link rel="next" href="../deprecations/">
+      
+      <link rel="icon" href="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-hand-logo.png?raw=true">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+    
+    
+      
+        <title>Contributing - Catch2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Open Sans";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contributing-to-catch2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Catch2" class="md-header__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Catch2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Contributing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Catch2" class="md-nav__button md-logo" aria-label="Catch2" data-md-component="logo">
+      
+  <img src="https://github.com/catchorg/Catch2/blob/devel/data/artwork/catch2-logo-small-with-background.png?raw=true" alt="logo">
+
+    </a>
+    Catch2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/catchorg/Catch2" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    catchorg/Catch2
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Readme/" class="md-nav__link">
+        Readme
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assertions/" class="md-nav__link">
+        Assertions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        Benchmarks
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ci-and-misc/" class="md-nav__link">
+        Ci and misc
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cmake-integration/" class="md-nav__link">
+        Cmake integration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command-line/" class="md-nav__link">
+        Command line
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commercial-users/" class="md-nav__link">
+        Commercial users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparing-floating-point-numbers/" class="md-nav__link">
+        Comparing floating point numbers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Contributing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Contributing
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-github" class="md-nav__link">
+    Using Git(Hub)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-your-changes" class="md-nav__link">
+    Testing your changes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-documentation" class="md-nav__link">
+    Writing documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technicalities" class="md-nav__link">
+    Technicalities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-code" class="md-nav__link">
+    Writing code
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c-standard-version" class="md-nav__link">
+    C++ standard version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    Formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-constructs-to-watch-out-for" class="md-nav__link">
+    Code constructs to watch out for
+  </a>
+  
+    <nav class="md-nav" aria-label="Code constructs to watch out for">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naked-exceptions-and-exceptions-related-function" class="md-nav__link">
+    Naked exceptions and exceptions-related function
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-stdmove-and-stdforward" class="md-nav__link">
+    Avoid std::move and std::forward
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unqualified-usage-of-functions-from-cs-stdlib" class="md-nav__link">
+    Unqualified usage of functions from C's stdlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-defined-literals-udl-for-catch2-types" class="md-nav__link">
+    User-Defined Literals (UDL) for Catch2' types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-source-file-template" class="md-nav__link">
+    New source file template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-new-catch_config-option" class="md-nav__link">
+    Adding new CATCH_CONFIG option
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coc" class="md-nav__link">
+    CoC
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deprecations/" class="md-nav__link">
+        Deprecations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../event-listeners/" class="md-nav__link">
+        Event listeners
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        Faq
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generators/" class="md-nav__link">
+        Generators
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        Limitations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../list-of-examples/" class="md-nav__link">
+        List of examples
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../matchers/" class="md-nav__link">
+        Matchers
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migrate-v2-to-v3/" class="md-nav__link">
+        Migrate v2 to v3
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../opensource-users/" class="md-nav__link">
+        Opensource users
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../other-macros/" class="md-nav__link">
+        Other macros
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../own-main/" class="md-nav__link">
+        Own main
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-notes/" class="md-nav__link">
+        Release notes
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-process/" class="md-nav__link">
+        Release process
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporter-events/" class="md-nav__link">
+        Reporter events
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reporters/" class="md-nav__link">
+        Reporters
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skipping-passing-failing/" class="md-nav__link">
+        Skipping passing failing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-cases-and-sections/" class="md-nav__link">
+        Test cases and sections
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test-fixtures/" class="md-nav__link">
+        Test fixtures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tostring/" class="md-nav__link">
+        Tostring
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage-tips/" class="md-nav__link">
+        Usage tips
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-catch/" class="md-nav__link">
+        Why catch
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-github" class="md-nav__link">
+    Using Git(Hub)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-your-changes" class="md-nav__link">
+    Testing your changes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-documentation" class="md-nav__link">
+    Writing documentation
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technicalities" class="md-nav__link">
+    Technicalities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-code" class="md-nav__link">
+    Writing code
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c-standard-version" class="md-nav__link">
+    C++ standard version
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    Formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-constructs-to-watch-out-for" class="md-nav__link">
+    Code constructs to watch out for
+  </a>
+  
+    <nav class="md-nav" aria-label="Code constructs to watch out for">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naked-exceptions-and-exceptions-related-function" class="md-nav__link">
+    Naked exceptions and exceptions-related function
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-stdmove-and-stdforward" class="md-nav__link">
+    Avoid std::move and std::forward
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unqualified-usage-of-functions-from-cs-stdlib" class="md-nav__link">
+    Unqualified usage of functions from C's stdlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-defined-literals-udl-for-catch2-types" class="md-nav__link">
+    User-Defined Literals (UDL) for Catch2' types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-source-file-template" class="md-nav__link">
+    New source file template
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-new-catch_config-option" class="md-nav__link">
+    Adding new CATCH_CONFIG option
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coc" class="md-nav__link">
+    CoC
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p><a id="top"></a></p>
+<h1 id="contributing-to-catch2">Contributing to Catch2<a class="headerlink" href="#contributing-to-catch2" title="Permanent link">#</a></h1>
+<p><strong>Contents</strong><br>
+<a href="#using-github">Using Git(Hub)</a><br>
+<a href="#testing-your-changes">Testing your changes</a><br>
+<a href="#writing-documentation">Writing documentation</a><br>
+<a href="#writing-code">Writing code</a><br>
+<a href="#coc">CoC</a><br></p>
+<p>So you want to contribute something to Catch2? That's great! Whether it's
+a bug fix, a new feature, support for additional compilers - or just
+a fix to the documentation - all contributions are very welcome and very
+much appreciated. Of course so are bug reports, other comments, and
+questions, but generally it is a better idea to ask questions in our
+<a href="https://discord.gg/4CWS9zD">Discord</a>, than in the issue tracker.</p>
+<p>This page covers some guidelines and helpful tips for contributing
+to the codebase itself.</p>
+<h2 id="using-github">Using Git(Hub)<a class="headerlink" href="#using-github" title="Permanent link">#</a></h2>
+<p>Ongoing development happens in the <code>devel</code> branch for Catch2 v3, and in
+<code>v2.x</code> for maintenance updates to the v2 versions.</p>
+<p>Commits should be small and atomic. A commit is atomic when, after it is
+applied, the codebase, tests and all, still works as expected. Small
+commits are also preferred, as they make later operations with git history,
+whether it is bisecting, reverting, or something else, easier.</p>
+<p><em>When submitting a pull request please do not include changes to the
+amalgamated distribution files. This means do not include them in your
+git commits!</em></p>
+<p>When addressing review comments in a MR, please do not rebase/squash the
+commits immediately. Doing so makes it harder to review the new changes,
+slowing down the process of merging a MR. Instead, when addressing review
+comments, you should append new commits to the branch and only squash
+them into other commits when the MR is ready to be merged. We recommend
+creating new commits with <code>git commit --fixup</code> (or <code>--squash</code>) and then
+later squashing them with <code>git rebase --autosquash</code> to make things easier.</p>
+<h2 id="testing-your-changes">Testing your changes<a class="headerlink" href="#testing-your-changes" title="Permanent link">#</a></h2>
+<p><em>Note: Running Catch2's tests requires Python3</em></p>
+<p>Catch2 has multiple layers of tests that are then run as part of our CI.
+The most obvious one are the unit tests compiled into the <code>SelfTest</code>
+binary. These are then used in "Approval tests", which run (almost) all
+tests from <code>SelfTest</code> through a specific reporter and then compare the
+generated output with a known good output ("Baseline"). By default, new
+tests should be placed here.</p>
+<p>To configure a Catch2 build with just the basic tests, use the <code>basic-tests</code>
+preset, like so:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Assuming you are in Catch2&#39;s root folder
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>cmake -B basic-test-build -S . -DCMAKE_BUILD_TYPE=Debug --preset basic-tests
+</code></pre></div>
+<p>However, not all tests can be written as plain unit tests. For example,
+checking that Catch2 orders tests randomly when asked to, and that this
+random ordering is subset-invariant, is better done as an integration
+test using an external check script. Catch2 integration tests are written
+using CTest, either as a direct command invocation + pass/fail regex,
+or by delegating the check to a Python script.</p>
+<p>Catch2 is slowly gaining more and more types of tests, currently Catch2
+project also has buildable examples, "ExtraTests", and CMake config tests.
+Examples present a small and self-contained snippets of code that
+use Catch2's facilities for specific purpose. Currently they are assumed
+passing if they compile.</p>
+<p>ExtraTests then are expensive tests, that we do not want to run all the
+time. This can be either because they take a long time to run, or because
+they take a long time to compile, e.g. because they test compile time
+configuration and require separate compilation.</p>
+<p>Finally, CMake config tests test that you set Catch2's compile-time
+configuration options through CMake, using CMake options of the same name.</p>
+<p>These test categories can be enabled one by one, by passing
+<code>-DCATCH_BUILD_EXAMPLES=ON</code>, <code>-DCATCH_BUILD_EXTRA_TESTS=ON</code>, and
+<code>-DCATCH_ENABLE_CONFIGURE_TESTS=ON</code> when configuring the build.</p>
+<p>Catch2 also provides a preset that promises to enable <em>all</em> test types,
+<code>all-tests</code>.</p>
+<p>The snippet below will build &amp; run all tests, in <code>Debug</code> compilation mode.</p>
+<!-- snippet: catch2-build-and-test -->
+<p><a id='snippet-catch2-build-and-test'></a>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. Regenerate the amalgamated distribution (some tests are built against it)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./tools/scripts/generateAmalgamatedFiles.py
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># 2. Configure the full test build</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>cmake<span class="w"> </span>-B<span class="w"> </span>debug-build<span class="w"> </span>-S<span class="w"> </span>.<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Debug<span class="w"> </span>--preset<span class="w"> </span>all-tests
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 3. Run the actual build</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>cmake<span class="w"> </span>--build<span class="w"> </span>debug-build
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># 4. Run the tests using CTest</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">cd</span><span class="w"> </span>debug-build
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>ctest<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span><span class="w"> </span>--output-on-failure<span class="w"> </span>-C<span class="w"> </span>Debug
+</code></pre></div>
+<sup><a href='/tools/scripts/buildAndTest.sh#L6-L19' title='File snippet <code>catch2-build-and-test</code> was extracted from'>snippet source</a> | <a href='#snippet-catch2-build-and-test' title='Navigate to start of snippet <code>catch2-build-and-test</code>'>anchor</a></sup></p>
+<!-- endSnippet -->
+
+<p>For convenience, the above commands are in the script <code>tools/scripts/buildAndTest.sh</code>, and can be run like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>Catch2
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>./tools/scripts/buildAndTest.sh
+</code></pre></div>
+<p>A Windows version of the script is available at <code>tools\scripts\buildAndTest.cmd</code>.</p>
+<p>If you added new tests, you will likely see <code>ApprovalTests</code> failure.
+After you check that the output difference is expected, you should
+run <code>tools/scripts/approve.py</code> to confirm them, and include these changes
+in your commit.</p>
+<h2 id="writing-documentation">Writing documentation<a class="headerlink" href="#writing-documentation" title="Permanent link">#</a></h2>
+<p>If you have added new feature to Catch2, it needs documentation, so that
+other people can use it as well. This section collects some technical
+information that you will need for updating Catch2's documentation, and
+possibly some generic advise as well.</p>
+<p>We use mkdocs for documentation and poetry for python environment.
+first install poetry (you'll need python...)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="go">pip install poetry</span>
+</code></pre></div>
+Poetry will install our docs dependencies
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="go">poetry install</span>
+</code></pre></div>
+serve the docs locally to see your changes
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="go">poetry run mkdocs serve</span>
+</code></pre></div></p>
+<h3 id="technicalities">Technicalities<a class="headerlink" href="#technicalities" title="Permanent link">#</a></h3>
+<p>First, the technicalities:</p>
+<ul>
+<li>
+<p>If you have introduced a new document, there is a simple template you
+should use. It provides you with the top anchor mentioned to link to
+(more below), and also with a backlink to the top of the documentation:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&lt;a id=&quot;top&quot;&gt;&lt;/a&gt;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="gh"># Cool feature</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">&gt; </span><span class="ge">[Introduced](https://github.com/catchorg/Catch2/pull/123456) in Catch2 X.Y.Z</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Text that explains how to use the cool feature.
+</code></pre></div></p>
+</li>
+<li>
+<p>Crosslinks to different pages should target the <code>top</code> anchor, like this
+<code>[link to contributing](contributing.md#top)</code>.</p>
+</li>
+<li>
+<p>We introduced version tags to the documentation, which show users in
+which version a specific feature was introduced. This means that newly
+written documentation should be tagged with a placeholder, that will
+be replaced with the actual version upon release. There are 2 styles
+of placeholders used through the documentation, you should pick one that
+fits your text better (if in doubt, take a look at the existing version
+tags for other features).</p>
+</li>
+<li><code>&gt; [Introduced](link-to-issue-or-PR) in Catch2 X.Y.Z</code> - this
+  placeholder is usually used after a section heading</li>
+<li><code>&gt; X (Y and Z) was [introduced](link-to-issue-or-PR) in Catch2 X.Y.Z</code></li>
+<li>
+<p>this placeholder is used when you need to tag a subpart of something,
+  e.g. a list</p>
+</li>
+<li>
+<p>For pages with more than 4 subheadings, we provide a table of contents
+(ToC) at the top of the page. Because GitHub markdown does not support
+automatic generation of ToC, it has to be handled semi-manually. Thus,
+if you've added a new subheading to some page, you should add it to the
+ToC. This can be done either manually, or by running the
+<code>updateDocumentToC.py</code> script in the <code>scripts/</code> folder.</p>
+</li>
+</ul>
+<h3 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">#</a></h3>
+<p>Now, for some content tips:</p>
+<ul>
+<li>
+<p>Usage examples are good. However, having large code snippets inline
+can make the documentation less readable, and so the inline snippets
+should be kept reasonably short. To provide more complex compilable
+examples, consider adding new .cpp file to <code>examples/</code>.</p>
+</li>
+<li>
+<p>Don't be afraid to introduce new pages. The current documentation
+tends towards long pages, but a lot of that is caused by legacy, and
+we know that some of the pages are overly big and unfocused.</p>
+</li>
+<li>
+<p>When adding information to an existing page, please try to keep your
+formatting, style and changes consistent with the rest of the page.</p>
+</li>
+<li>
+<p>Any documentation has multiple different audiences, that desire
+different information from the text. The 3 basic user-types to try and
+cover are:</p>
+</li>
+<li>A beginner to Catch2, who requires closer guidance for the usage of Catch2.</li>
+<li>Advanced user of Catch2, who want to customize their usage.</li>
+<li>Experts, looking for full reference of Catch2's capabilities.</li>
+</ul>
+<h2 id="writing-code">Writing code<a class="headerlink" href="#writing-code" title="Permanent link">#</a></h2>
+<p>If want to contribute code, this section contains some simple rules
+and tips on things like code formatting, code constructions to avoid,
+and so on.</p>
+<h3 id="c-standard-version">C++ standard version<a class="headerlink" href="#c-standard-version" title="Permanent link">#</a></h3>
+<p>Catch2 currently targets C++14 as the minimum supported C++ version.
+Features from higher language versions should be used only sparingly,
+when the benefits from using them outweigh the maintenance overhead.</p>
+<p>Example of good use of polyfilling features is our use of <code>conjunction</code>,
+where if available we use <code>std::conjunction</code> and otherwise provide our
+own implementation. The reason it is good is that the surface area for
+maintenance is quite small, and <code>std::conjunction</code> can directly use
+compiler built-ins, thus providing significant compilation benefits.</p>
+<p>Example of bad use of polyfilling features would be to keep around two
+sets of metaprogramming in the stringification implementation, once
+using C++14 compliant TMP and once using C++17's <code>if constexpr</code>. While
+the C++17 would provide significant compilation speedups, the maintenance
+cost would be too high.</p>
+<h3 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link">#</a></h3>
+<p>To make code formatting simpler for the contributors, Catch2 provides
+its own config for <code>clang-format</code>. However, because it is currently
+impossible to replicate existing Catch2's formatting in clang-format,
+using it to reformat a whole file would cause massive diffs. To keep
+the size of your diffs reasonable, you should only use clang-format
+on the newly changed code.</p>
+<h3 id="code-constructs-to-watch-out-for">Code constructs to watch out for<a class="headerlink" href="#code-constructs-to-watch-out-for" title="Permanent link">#</a></h3>
+<p>This section is a (sadly incomplete) listing of various constructs that
+are problematic and are not always caught by our CI infrastructure.</p>
+<h4 id="naked-exceptions-and-exceptions-related-function">Naked exceptions and exceptions-related function<a class="headerlink" href="#naked-exceptions-and-exceptions-related-function" title="Permanent link">#</a></h4>
+<p>If you are throwing an exception, it should be done via <code>CATCH_ERROR</code>
+or <code>CATCH_RUNTIME_ERROR</code> in <code>internal/catch_enforce.hpp</code>. These macros will handle
+the differences between compilation with or without exceptions for you.
+However, some platforms (IAR) also have problems with exceptions-related
+functions, such as <code>std::current_exceptions</code>. We do not have IAR in our
+CI, but luckily there should not be too many reasons to use these.
+However, if you do, they should be kept behind a
+<code>CATCH_CONFIG_DISABLE_EXCEPTIONS</code> macro.</p>
+<h4 id="avoid-stdmove-and-stdforward">Avoid <code>std::move</code> and <code>std::forward</code><a class="headerlink" href="#avoid-stdmove-and-stdforward" title="Permanent link">#</a></h4>
+<p><code>std::move</code> and <code>std::forward</code> provide nice semantic name for a specific
+<code>static_cast</code>. However, being function templates they have surprisingly
+high cost during compilation, and can also have a negative performance
+impact for low-optimization builds.</p>
+<p>You should be using <code>CATCH_MOVE</code> and <code>CATCH_FORWARD</code> macros from
+<code>internal/catch_move_and_forward.hpp</code> instead. They expand into the proper
+<code>static_cast</code>, and avoid the overhead of <code>std::move</code> and <code>std::forward</code>.</p>
+<h4 id="unqualified-usage-of-functions-from-cs-stdlib">Unqualified usage of functions from C's stdlib<a class="headerlink" href="#unqualified-usage-of-functions-from-cs-stdlib" title="Permanent link">#</a></h4>
+<p>If you are using a function from C's stdlib, please include the header
+as <code>&lt;cfoo&gt;</code> and call the function qualified. The common knowledge that
+there is no difference is wrong, QNX and VxWorks won't compile if you
+include the header as <code>&lt;cfoo&gt;</code> and call the function unqualified.</p>
+<h4 id="user-defined-literals-udl-for-catch2-types">User-Defined Literals (UDL) for Catch2' types<a class="headerlink" href="#user-defined-literals-udl-for-catch2-types" title="Permanent link">#</a></h4>
+<p>Due to messy standardese and ... not great ... implementation of
+<code>-Wreserved-identifier</code> in Clang, avoid declaring UDLs as
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Approx</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="n">_a</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="p">);</span>
+</code></pre></div>
+and instead declare them as
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">Approx</span><span class="w"> </span><span class="k">operator</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="n">_a</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="kt">double</span><span class="p">);</span>
+</code></pre></div></p>
+<p>Notice that the second version does not have a space between the <code>""</code> and
+the literal suffix.</p>
+<h3 id="new-source-file-template">New source file template<a class="headerlink" href="#new-source-file-template" title="Permanent link">#</a></h3>
+<p>If you are adding new source file, there is a template you should use.
+Specifically, every source file should start with the licence header:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w">    </span><span class="c1">//              Copyright Catch2 Authors</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="c1">// Distributed under the Boost Software License, Version 1.0.</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="c1">//   (See accompanying file LICENSE.txt or copy at</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="c1">//        https://www.boost.org/LICENSE_1_0.txt)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="c1">// SPDX-License-Identifier: BSL-1.0</span>
+</code></pre></div></p>
+<p>The include guards for header files should follow the pattern <code>{FILENAME}_INCLUDED</code>.
+This means that for file <code>catch_matchers_foo.hpp</code>, the include guard should
+be <code>CATCH_MATCHERS_FOO_HPP_INCLUDED</code>, for <code>catch_generators_bar.hpp</code>, the include
+guard should be <code>CATCH_GENERATORS_BAR_HPP_INCLUDED</code>, and so on.</p>
+<h3 id="adding-new-catch_config-option">Adding new <code>CATCH_CONFIG</code> option<a class="headerlink" href="#adding-new-catch_config-option" title="Permanent link">#</a></h3>
+<p>When adding new <code>CATCH_CONFIG</code> option, there are multiple places to edit:
+  * <code>CMake/CatchConfigOptions.cmake</code> - this is used to generate the
+    configuration options in CMake, so that CMake frontends know about them.
+  * <code>docs/configuration.md</code> - this is where the options are documented
+  * <code>src/catch2/catch_user_config.hpp.in</code> - this is template for generating
+    <code>catch_user_config.hpp</code> which contains the materialized configuration
+  * <code>BUILD.bazel</code> - Bazel does not have configuration support like CMake,
+    and all expansions need to be done manually
+  * other files as needed, e.g. <code>catch2/internal/catch_config_foo.hpp</code>
+    for the logic that guards the configuration</p>
+<h2 id="coc">CoC<a class="headerlink" href="#coc" title="Permanent link">#</a></h2>
+<p>This project has a <a href="../CODE_OF_CONDUCT.md">CoC</a>. Please adhere to it
+while contributing to Catch2.</p>
+<hr />
+<p><em>This documentation will always be in-progress as new information comes
+up, but we are trying to keep it as up to date as possible.</em></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      catchorg <a href="https://github/nrbnlulu.com>Nir</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/catchorg/Catch2" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  </body>
+</html>
